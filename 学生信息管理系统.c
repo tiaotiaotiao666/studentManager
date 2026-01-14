@@ -25,8 +25,7 @@ int main() {
 					printf("保存成功!\n");
 				}
 			}
-			printf("Quit\n");
-			system("pause");
+			printf("Quit!\n");
 			return 0;
 		case Entry:
 			EntryStudent(&list);
@@ -39,21 +38,26 @@ int main() {
 		case Save:
 			SaveStudent(&list);
 			printf("保存成功!\n");
+			need = 0;
 			break;
 		case Read:
 			ReadStudent(&list);
 			printf("读取成功!\n");
 			break;
 		case Modify:
+			ModifyStudent(&list);
+			need = 1;
 			break;
 		case Add:
 			break;
 		case Delete:
+			DeleteStudent(&list);
+			need = 1;
 			break;
 		case Find:
 		{
 			Node* node = FindStudent(&list);
-			if (!node)printf("没有找到查询的学生\n");
+			if (!node)printf("没有找到要查询的学生\n");
 			else {
 				printf("学号>%llu\n",node->stu.id);
 				printf("姓名>%s\n", node->stu.name);
@@ -69,6 +73,8 @@ int main() {
 			StatisticsStudent(&list);
 			break;
 		case Sort:
+			SortStudent(&list);
+			need = 1;
 			break;
 		default:
 			printf("无效选择!!!\n");

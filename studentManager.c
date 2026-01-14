@@ -5,19 +5,6 @@
 #define MAX(a,b)(a > b ? a : b)
 #define MIN(a,b)(a < b ? a : b)
 
-
-int cmpup(const void* a, const void* b) {
-	Node* A = (Node*)a;
-	Node* B = (Node*)b;
-	return A->stu.total - B->stu.total;
-}
-
-int cmpdown(const void* a, const void* b) {
-	Node* A = (Node*)a;
-	Node* B = (Node*)b;
-	return B->stu.total - A->stu.total;
-}
-
 static Node* CreatNode() {
 	Node* node = malloc(sizeof(Node));
 	if (!node) {
@@ -73,7 +60,6 @@ void EntryStudent(List* list){
 	while (getchar() != '\n');
 	printf("请输入英语成绩>");
 	scanf("%f", &node->stu.english);
-	while (getchar() != '\n');
 	node->stu.total = node->stu.chinese + node->stu.math + node->stu.english;
 	if (list->front == NULL) {
 		list->front = node;
@@ -142,7 +128,38 @@ void ReadStudent(List* list){
 }
 
 void ModifyStudent(List* list){
-
+	char buffer[32];
+	printf("请输入要修改学生的姓名或学号>");
+	scanf("%s", buffer);
+	Node* curNode = list->front;
+	while (curNode != NULL) {
+		if (strcmp(curNode->stu.name, buffer) == 0)break;
+		else if (atoi(buffer) == curNode->stu.id)break;
+		curNode = curNode->next;
+	}
+	if (curNode != NULL) {
+		printf("Find it!\n");
+		printf("请输入修改后的学号>");
+		scanf("%llu", &curNode->stu.id);
+		while (getchar() != '\n');
+		printf("请输入修改后的姓名>");
+		scanf("%s", curNode->stu.name);
+		while (getchar() != '\n');
+		printf("请输入修改后的性别>");
+		scanf("%s", curNode->stu.sex);
+		while (getchar() != '\n');
+		printf("请输入修改后的语文成绩>");
+		scanf("%f", &curNode->stu.chinese);
+		while (getchar() != '\n');
+		printf("请输入修改后数学成绩>");
+		scanf("%f", &curNode->stu.math);
+		while (getchar() != '\n');
+		printf("请输入修改后的英语成绩>");
+		scanf("%f", &curNode->stu.english);
+		curNode->stu.total = curNode->stu.chinese + curNode->stu.math + curNode->stu.english;
+	}
+	else printf("没找到目标学生~~\n");
+	printf("修改成功!\n");
 }
 
 void AddStudent(List* list){
@@ -150,7 +167,24 @@ void AddStudent(List* list){
 }
 
 void DeleteStudent(List* list){
-
+	char buffer[32];
+	printf("请输入要删除的学生的姓名或学号>");
+	scanf("%s", buffer);
+	Node* dummy = (Node*)malloc(sizeof(Node));
+	dummy->next = list->front;
+	Node* curNode = dummy;
+	while (curNode->next != NULL) {
+		if (strcmp(curNode->next->stu.name, buffer) == 0)break;
+		else if (atoi(buffer) == curNode->next->stu.id)break;
+		curNode = curNode->next;
+	}
+	if(curNode->next == NULL)printf("没找到要删除的学生!\n");
+	else {
+		curNode->next = curNode->next->next;
+	}
+	list->front = dummy->next;
+	free(dummy);
+	printf("删除成功!\n");
 }
 
 Node* FindStudent(List* list){
@@ -210,5 +244,31 @@ void StatisticsStudent(List* list) {
 }
 
 void SortStudent(List* list){
+	Node* node = list->front;
+	int choise;
+	printf("************************************\n");
+	printf("*           请选择排序             *\n");
+	printf("************************************\n");
+	printf("*          1.总分升序              *\n");
+	printf("*          2.总分降序              *\n");
+	printf("*          3.语文成绩升序          *\n");
+	printf("*          4.语文成绩降序          *\n");
+	printf("*          5.数学成绩升序          *\n");
+	printf("*          6.数学成绩降序          *\n");
+	printf("*          7.英语成绩升序          *\n");
+	printf("*          8.英语成绩降序          *\n");
+	printf("*          9.名字序升序            *\n");
+	printf("*          10.名字序降序           *\n");
+	printf("*          11.学号升序             *\n");
+	printf("*          12.学号降序             *\n");
+	printf("************************************\n");
+	printf(">");
+	scanf("%d", &choise);
+	if (choise < 1 || choise > 12) {
+		printf("无效选择!\n");
+		return;
+	}
+	else {
 
+	}
 }
