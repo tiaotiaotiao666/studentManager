@@ -8,12 +8,19 @@
 
 
 int main() {
+
+	List list = { 0 };
+	memset(&list, 0, sizeof(list));
 	while (true) {
 		switch (menu()) {
 		case Quit:
 			printf("Quit\n");
 			return 0;
 		case Entry:
+			EntryStudent(&list);
+			break;
+		case Print:
+			PrintStudent(&list);
 			break;
 		case Save:
 			break;
