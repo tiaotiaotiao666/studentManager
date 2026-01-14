@@ -2,6 +2,21 @@
 #include "studentManager.h"
 #include<stdio.h>
 #include<stdlib.h>
+#define MAX(a,b)(a > b ? a : b)
+#define MIN(a,b)(a < b ? a : b)
+
+
+int cmpup(const void* a, const void* b) {
+	Node* A = (Node*)a;
+	Node* B = (Node*)b;
+	return A->stu.total - B->stu.total;
+}
+
+int cmpdown(const void* a, const void* b) {
+	Node* A = (Node*)a;
+	Node* B = (Node*)b;
+	return B->stu.total - A->stu.total;
+}
 
 static Node* CreatNode() {
 	Node* node = malloc(sizeof(Node));
@@ -124,4 +139,76 @@ void ReadStudent(List* list){
 	}
 
 	fclose(fp);
+}
+
+void ModifyStudent(List* list){
+
+}
+
+void AddStudent(List* list){
+
+}
+
+void DeleteStudent(List* list){
+
+}
+
+Node* FindStudent(List* list){
+	char buffer[32];
+	printf("请输入要查找学生的姓名或学号>");
+	scanf("%s", buffer);
+	Node* curNode = list->front;
+	while (curNode != NULL) {
+		if (strcmp(curNode->stu.name, buffer) == 0) return curNode;
+		else if (atoi(buffer) == curNode->stu.id)return curNode;
+		curNode = curNode->next;
+	}
+	return NULL;
+}
+
+void StatisticsStudent(List* list) {
+	Node* node = list->front;
+	printf("共有%d名学生\n", list->size);
+	if(list->size > 0){
+	float chi = 0, ma = 0, eng = 0, all = 0;
+	float chineseMax = 0, mathMax = 0, englishMax = 0,totalMax = 0;
+	float chineseMin = 1000, mathMin = 1000, englishMin = 1000,totalMin = 1000;
+	while (node != NULL) {
+		chi += node->stu.chinese;
+		ma += node->stu.math;
+		eng += node->stu.english;
+		all += node->stu.total;
+		chineseMax = MAX(node->stu.chinese, chineseMax);
+		chineseMin = MIN(node->stu.chinese, chineseMin);
+		mathMax = MAX(node->stu.math, mathMax);
+		mathMin = MIN(node->stu.math, mathMin);
+		englishMax = MAX(node->stu.english, englishMax);
+		englishMin = MIN(node->stu.english, englishMin);
+		totalMax = MAX(node->stu.total, totalMax);
+		totalMin = MIN(node->stu.total, totalMin);
+		node = node->next;
+	}
+	chi /= list->size;
+	ma /= list->size;
+	eng /= list->size;
+	all /= list->size;
+	printf("总分平均分为>%.2f\n",all);
+	printf("语文平均分为>%.2f\n",chi);
+	printf("数学平均分为>%.2f\n",ma);
+	printf("英语平均分为>%.2f\n",eng);
+	printf("******************\n");
+	printf("语文最高分为>%.2f\n",chineseMax);
+	printf("数学最高分为>%.2f\n",mathMax);
+	printf("英语最高分为>%.2f\n",englishMax);
+	printf("总分最高分为>%.2f\n",totalMax);
+	printf("******************\n");
+	printf("语文最低分为>%.2f\n", chineseMin);
+	printf("数学最低分为>%.2f\n", mathMin);
+	printf("英语最低分为>%.2f\n", englishMin);
+	printf("总分最低分为>%.2f\n", totalMin);
+}
+}
+
+void SortStudent(List* list){
+
 }

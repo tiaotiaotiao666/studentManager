@@ -45,3 +45,15 @@ void PrintStudent(List* list);
 void SaveStudent(List* list);
 
 void ReadStudent(List* list);
+
+void ModifyStudent(List* list);
+
+void AddStudent(List* list);
+
+void DeleteStudent(List* list);
+
+Node* FindStudent(List* list);
+
+void StatisticsStudent(List* list);
+
+void SortStudent(List* list);
