@@ -23,8 +23,10 @@ int main() {
 			PrintStudent(&list);
 			break;
 		case Save:
+			SaveStudent(&list);
 			break;
 		case Read:
+			ReadStudent(&list);
 			break;
 		case Modify:
 			break;

@@ -3,7 +3,7 @@
 typedef struct Student {
 	unsigned long long id;	//学号
 	char name[32];			//姓名
-	char sex;				//性别
+	char sex[5];				//性别
 	float chinese;			//语文成绩
 	float math;				//数学成绩
 	float english;			//英语成绩
@@ -41,3 +41,7 @@ int menu();
 void EntryStudent(List* list);
 
 void PrintStudent(List* list);
+
+void SaveStudent(List* list);
+
+void ReadStudent(List* list);
