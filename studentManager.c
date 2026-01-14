@@ -22,7 +22,7 @@ int menu() {
 	printf("*         10.排序学生信息           *\n");
 	printf("*         0.退出系统               *\n");
 	printf("************************************\n");
-	printf("请选择功能(0-9): ");
+	printf("请选择功能(0-10): ");
 	int select = -1;
 	scanf("%d", &select);
 	return select;
