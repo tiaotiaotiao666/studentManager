@@ -80,7 +80,7 @@ int main() {
 			printf("无效选择!!!\n");
 			break;
 		}
-
+		while (getchar() != '\n');
 		system("pause");
 	}
 

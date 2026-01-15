@@ -44,7 +44,7 @@ void EntryStudent(List* list){
 	Node* node = CreatNode();
 
 	printf("请输入学生学号>");
-	scanf("%llu", &node->stu.id);
+	scanf("%lld", &node->stu.id);
 	while (getchar() != '\n');
 	printf("请输入学生姓名>");
 	scanf("%s", node->stu.name);
@@ -80,7 +80,7 @@ void PrintStudent(List* list){
 	printf("*****************************************************\n");
 	Node* curr = list->front;
 	while (curr != NULL) {
-		printf("%llu\t%s\t%s\t%.2f\t%.2f\t%.2f\t%.2f\n", curr->stu.id, curr->stu.name, curr->stu.sex, curr->stu.chinese, curr->stu.math, curr->stu.english, curr->stu.total);
+		printf("%lld\t%s\t%s\t%.2f\t%.2f\t%.2f\t%.2f\n", curr->stu.id, curr->stu.name, curr->stu.sex, curr->stu.chinese, curr->stu.math, curr->stu.english, curr->stu.total);
 		curr = curr->next;
 	}
 }
@@ -140,7 +140,7 @@ void ModifyStudent(List* list){
 	if (curNode != NULL) {
 		printf("Find it!\n");
 		printf("请输入修改后的学号>");
-		scanf("%llu", &curNode->stu.id);
+		scanf("%lld", &curNode->stu.id);
 		while (getchar() != '\n');
 		printf("请输入修改后的姓名>");
 		scanf("%s", curNode->stu.name);
@@ -243,9 +243,22 @@ void StatisticsStudent(List* list) {
 }
 }
 
+void ExchangeStudent(Node* node) {
+	if (node == NULL || node->next == NULL || node->next->next == NULL) {
+		return;  
+	}
+	Node* temp = node->next;
+	node->next = node->next->next;
+	temp->next = node->next->next;
+	node->next->next = temp;
+}
+
 void SortStudent(List* list){
-	Node* node = list->front;
-	int choise;
+	Node* dummy = (Node*)malloc(sizeof(Node));
+	dummy->next = list->front;
+	Node* node;
+	printf("\n");
+	int choice;
 	printf("************************************\n");
 	printf("*           请选择排序             *\n");
 	printf("************************************\n");
@@ -263,12 +276,32 @@ void SortStudent(List* list){
 	printf("*          12.学号降序             *\n");
 	printf("************************************\n");
 	printf(">");
-	scanf("%d", &choise);
-	if (choise < 1 || choise > 12) {
-		printf("无效选择!\n");
+	scanf("%d", &choice);
+	if (choice < 1 || choice > 12) {
+		printf("无效操作!\n");
+		free(dummy);
 		return;
 	}
-	else {
-
+	for (int i = 0; i < list->size - 1; i++) {
+		node = dummy;
+		for (int j = 0; j < list->size - i - 1; j++) {
+			int count = 0;
+			if (choice == 1 && node->next->stu.total - node->next->next->stu.total > 0) count = 1;
+			else if (choice == 2 && node->next->stu.total - node->next->next->stu.total < 0) count = 1;
+			else if (choice == 3 && node->next->stu.chinese - node->next->next->stu.chinese > 0) count = 1;
+			else if (choice == 4 && node->next->stu.chinese - node->next->next->stu.chinese < 0) count = 1;
+			else if (choice == 5 && node->next->stu.math - node->next->next->stu.math > 0) count = 1;
+			else if (choice == 6 && node->next->stu.math - node->next->next->stu.math < 0) count = 1;
+			else if (choice == 7 && node->next->stu.english - node->next->next->stu.english > 0) count = 1;
+			else if (choice == 8 && node->next->stu.english - node->next->next->stu.english < 0) count = 1;
+			else if (choice == 9 && strcmp(node->next->stu.name , node->next->next->stu.name) > 0) count = 1;
+			else if (choice == 10 && strcmp(node->next->stu.name , node->next->next->stu.name) < 0) count = 1;
+			else if (choice == 11 && node->next->stu.id - node->next->next->stu.id > 0) count = 1;
+			else if (choice == 12 && node->next->stu.id - node->next->next->stu.id < 0) count = 1;
+			if (count)ExchangeStudent(node);
+			node = node->next;
+		}
 	}
+	list->front = dummy->next;
+	free(dummy);
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 typedef struct Student {
-	unsigned long long id;	//学号
+	long long id;	//学号
 	char name[32];			//姓名
 	char sex[5];				//性别
 	float chinese;			//语文成绩
